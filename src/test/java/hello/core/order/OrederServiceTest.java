@@ -27,4 +27,5 @@ public class OrederServiceTest {
         Assertions.assertThat(order.getDiscoutnPrice()).isEqualTo(1000);
 
     }
+
 }
