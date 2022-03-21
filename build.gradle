@@ -6,16 +6,17 @@ plugins {
 
 group = 'hello'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '11'//자바 11버전
 
 repositories {
-	mavenCentral()
+	mavenCentral()//라이브러리를 다운받는 곳
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-web'//자동으로 이 라이브러리와 의존하고 있는 라이브러리를 다 가져온다
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'//기본 테스트 라이브러리
 }
 
 tasks.named('test') {
