@@ -5,11 +5,13 @@ import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 //@Service//스프링에 올라올 때 MemberService를 등록
+@Transactional//저장하거나 변경할때 항상 필요
 public class MemberService {
     private final MemberRepository memberRepository;
 
