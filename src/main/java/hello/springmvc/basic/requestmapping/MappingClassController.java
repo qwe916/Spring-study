@@ -1,9 +1,6 @@
 package hello.springmvc.basic.requestmapping;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MappingClassController {
@@ -22,5 +19,13 @@ public class MappingClassController {
         return "get userId=" + userId;
     }
 
+    @PatchMapping("/mapping/users/{userId}")
+    public String updateUser(@PathVariable String userId) {
+        return "update userId=" + userId;
+    }
 
+    @DeleteMapping("/mapping/users/{userId}")
+    public String deleteUser(@PathVariable String userId) {
+        return "delete userId=" + userId;
+    }
 }
