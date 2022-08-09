@@ -8,15 +8,12 @@ public class Item {
     private Long id;
     private String itemName;
     private Integer price;
-    private Integer guantity;
-
-    public Item(String itemA, int i, int i1) {
+    private Integer quantity;
+    public Item() {
     }
-
-    public Item(Long id, String itemName, Integer price, Integer guantity) {
-        this.id = id;
+    public Item(String itemName, Integer price, Integer quantity) {
         this.itemName = itemName;
         this.price = price;
-        this.guantity = guantity;
+        this.quantity = quantity;
     }
 }

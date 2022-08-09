@@ -18,22 +18,18 @@ public class ItemRepository {
         store.put(item.getId(), item);
         return item;
     }
-
     public Item findById(Long id) {
         return store.get(id);
     }
-
     public List<Item> findAll() {
         return new ArrayList<>(store.values());
     }
-
     public void update(Long itemId, Item updateParam) {
         Item findItem = findById(itemId);
         findItem.setItemName(updateParam.getItemName());
         findItem.setPrice(updateParam.getPrice());
-        findItem.setGuantity(updateParam.getGuantity());
+        findItem.setQuantity(updateParam.getQuantity());
     }
-
     public void clearStore() {
         store.clear();
     }
