@@ -31,12 +31,17 @@ public class BasicController {
         return "basic/text-basic";
     }
 
+    /**
+     * 텍스트
+     */
     @GetMapping("/text-unescaped")
     public String textUnescaped(Model model) {
         model.addAttribute("data", "Hello <b>Spring</b>");
         return "basic/text-unescaped";
     }
-
+    /**
+     * SpringEL-변수
+     */
     @GetMapping("/vari")
     public String variable(Model model) {
         User userA = new User("userA", 10);
@@ -69,16 +74,32 @@ public class BasicController {
         }
     }
 
+    /**
+     * 기본 객체들
+     */
     @GetMapping("/basic-objects")
     public String basicObject(HttpSession session) {
         session.setAttribute("sessionData", "Hello Session");
         return "basic/basic-objects";
     }
 
+    /**
+     * 유틸리티 객체와 날짜
+     * */
     @GetMapping("/date")
     public String date(Model model) {
         model.addAttribute("localDateTime", LocalDateTime.now());
         return "basic/date";
+    }
+
+    /**
+     * url 연결
+     */
+    @GetMapping("/link")
+    public String link(Model model) {
+        model.addAttribute("param1", "data1");
+        model.addAttribute("param2", "data2");
+        return "basic/link";
     }
 
     @Component("helloBean")
