@@ -163,6 +163,25 @@ public class BasicController {
         model.addAttribute("data", "Spring!");
         return "basic/comments";
     }
+
+    /**
+     * 블록 태그
+     */
+    @GetMapping("/block")
+    public String block(Model model) {
+        addUsers(model);
+        return "basic/block";
+    }
+
+    /**
+     * 자바스크립트
+     */
+    @GetMapping("/javascript")
+    public String javascript(Model model) {
+        model.addAttribute("user", new User("userA", 10));
+        addUsers(model);
+        return "basic/javascript";
+    }
     @Component("helloBean")
     static class HelloBean {
         public String hello(String data) {
