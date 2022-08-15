@@ -145,6 +145,15 @@ public class BasicController {
         list.add(new User("UserC", 30));
         model.addAttribute("users", list);
     }
+
+    /**
+     * 조건문 평가
+     */
+    @GetMapping("/condition")
+    public  String condition(Model model) {
+        addUsers(model);
+        return "basic/condition";
+    }
     @Component("helloBean")
     static class HelloBean {
         public String hello(String data) {

@@ -24,7 +24,7 @@
         <th>age</th>
         <th>etc</th>
     </tr>
-    <tr th:each="user, userStat : ${users}">
+    <tr th:each="user, userStat : ${users}"><!--userStat은 생략가능 생략되면 자동으로 첫번째 파라미터 뒤에 Stat이 붙는다.-->
         <td th:text="${userStat.count}">username</td>
         <td th:text="${user.username}">username</td>
         <td th:text="${user.age}">0</td>
