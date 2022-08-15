@@ -182,6 +182,7 @@ public class BasicController {
         addUsers(model);
         return "basic/javascript";
     }
+
     @Component("helloBean")
     static class HelloBean {
         public String hello(String data) {
