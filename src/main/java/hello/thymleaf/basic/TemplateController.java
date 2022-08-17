@@ -17,7 +17,7 @@ public class TemplateController {
     }
 
     /**
-     * 템플릿 레이아웃
+     * 템플릿 레이아웃(일부 부분은 유지하고 주 콘텐츠만 바뀌기 위한 기능)
      */
     @GetMapping("/layout")
     public String layout() {
