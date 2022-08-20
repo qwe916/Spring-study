@@ -17,7 +17,7 @@
             <button class="btn btn-primary float-end"
                     onclick="location.href='addForm.html'"
                     th:onclick="|location.href='@{/message/items/add}'|"
-                    type="button">상품 등록</button>
+                    type="button" th:text="#{page.addItem}">상품 등록</button>
         </div>
     </div>
 
@@ -26,10 +26,10 @@
         <table class="table">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>상품명</th>
-                <th>가격</th>
-                <th>수량</th>
+                <th th:text="#{label.item.id}"></th>
+                <th th:text="#{label.item.itemName}"></th>
+                <th th:text="#{label.item.price}"></th>
+                <th th:text="#{label.item.quantity}"></th>
             </tr>
             </thead>
             <tbody>
