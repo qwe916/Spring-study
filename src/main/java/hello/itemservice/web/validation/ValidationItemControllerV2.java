@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.sun.beans.introspect.PropertyInfo.Name.required;
 
 @Slf4j
 @Controller
@@ -124,10 +123,10 @@ public class ValidationItemControllerV2 {
             bindingResult.addError(new FieldError("item", "itemName", item.getItemName(), false, new String[]{"required.item.itemName"}, null, "상품이름은 필수입니다."));
         }
         if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
-            bindingResult.addError(new FieldError("item", "price",item.getPrice(), false, new String["range.item.price"], new Object[]{1000,10000000}, "가격은 1,000~1,000,0000 까지 허용합니다."));
+            bindingResult.addError(new FieldError("item", "price",item.getPrice(), false, new String[]{"range.item.price"}, new Object[]{1000,10000000}, "가격은 1,000~1,000,0000 까지 허용합니다."));
         }
         if (item.getQuantity() == null || item.getQuantity() >= 9999) {
-            bindingResult.addError(new FieldError("item", "quantity",item.getQuantity(), false, null, null, "수량은 최대 9,999까지 가능합니다."));
+            bindingResult.addError(new FieldError("item", "quantity",item.getQuantity(), false,  new String[]{"max.item.quantity"}, null, "수량은 최대 9,999까지 가능합니다."));
         }
 
         if (item.getPrice() != null && item.getQuantity() != null) {
