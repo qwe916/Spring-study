@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.sun.beans.introspect.PropertyInfo.Name.required;
+
 @Slf4j
 @Controller
 @RequestMapping("/validation/v2/items")
@@ -80,7 +82,7 @@ public class ValidationItemControllerV2 {
     }
 
     //오류 발생시 입력한 값을 유지시키는 BindingResult
-    @PostMapping("/add")
+    //@PostMapping("/add")
     public String addV2Item(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         // BindingResult로 error 전달
@@ -89,6 +91,40 @@ public class ValidationItemControllerV2 {
         }
         if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
             bindingResult.addError(new FieldError("item", "price",item.getPrice(), false, null, null, "가격은 1,000~1,000,0000 까지 허용합니다."));
+        }
+        if (item.getQuantity() == null || item.getQuantity() >= 9999) {
+            bindingResult.addError(new FieldError("item", "quantity",item.getQuantity(), false, null, null, "수량은 최대 9,999까지 가능합니다."));
+        }
+
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                //객체 필드가 아닌 경우 new ObjectError 생성, Object 에러는 넘어오는 값이 없기 때문에 입력된 값을 유지할 것이 없다.
+                bindingResult.addError(new ObjectError("item", null, null, "가격 x 수량의 합은 10,000원 이상이여햐 합니다. 현재 값 " + resultPrice));
+            }
+        }
+
+        if (bindingResult.hasErrors()) {//오류가 존재하면
+            log.info("bindingResult= {}",bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        //검증 성공 로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
+    @PostMapping("/add")
+    public String addV3Item(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
+        // BindingResult로 error 전달
+        if (!StringUtils.hasText(item.getItemName())) {//글자가 없으면
+            bindingResult.addError(new FieldError("item", "itemName", item.getItemName(), false, new String[]{"required.item.itemName"}, null, "상품이름은 필수입니다."));
+        }
+        if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
+            bindingResult.addError(new FieldError("item", "price",item.getPrice(), false, new String["range.item.price"], new Object[]{1000,10000000}, "가격은 1,000~1,000,0000 까지 허용합니다."));
         }
         if (item.getQuantity() == null || item.getQuantity() >= 9999) {
             bindingResult.addError(new FieldError("item", "quantity",item.getQuantity(), false, null, null, "수량은 최대 9,999까지 가능합니다."));
