@@ -161,8 +161,13 @@ public class ValidationItemControllerV2 {
         log.info("target={}", bindingResult.getTarget());
 
         // BindingResult.rejectValue 로 error 전달
-        //rejectValue(field 명, errorCode(규칙 : 첫번째 이름.target),에러 인자, 디폴트 인자)
-        if (!StringUtils.hasText(item.getItemName())) {//글자가 없으면
+        //rejectValue(field 명, errorCode,에러 인자, 디폴트 인자)
+        /**
+         * errorCode에는 우선순위가 존재한다.
+         * ex) required와  required.item.itemName 중 더 자세히 표현되어 있는게 우선순위가 높다.
+         * 먼제 맨앞 메세지를 찾고 그 메시지 중 디테일한게 있으면 그에 맞는 디테일한 메세지를 보내고 없다면 후 순위 메시지를 보낸다.
+        */
+         if (!StringUtils.hasText(item.getItemName())) {//글자가 없으면
             bindingResult.rejectValue("itemName","required");
         }
         if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
