@@ -115,8 +115,12 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-    @PostMapping("/add")
+    //@PostMapping("/add")
     public String addV3Item(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
+        //타켓을 이미 알고있는 bindingResult
+        log.info("objectName={}", bindingResult.getObjectName());
+        log.info("target={}", bindingResult.getTarget());
 
         // BindingResult로 error 전달
         if (!StringUtils.hasText(item.getItemName())) {//글자가 없으면
@@ -134,6 +138,46 @@ public class ValidationItemControllerV2 {
             if (resultPrice < 10000) {
                 //객체 필드가 아닌 경우 new ObjectError 생성, Object 에러는 넘어오는 값이 없기 때문에 입력된 값을 유지할 것이 없다.
                 bindingResult.addError(new ObjectError("item", new String[]{"totalPriceMin"}, new Object[]{10000,resultPrice}, "가격 x 수량의 합은 10,000원 이상이여햐 합니다. 현재 값 " + resultPrice));
+            }
+        }
+
+        if (bindingResult.hasErrors()) {//오류가 존재하면
+            log.info("bindingResult= {}",bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        //검증 성공 로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
+    @PostMapping("/add")
+    public String addV4Item(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+
+        //타켓을 이미 알고있는 bindingResult
+        log.info("objectName={}", bindingResult.getObjectName());
+        log.info("target={}", bindingResult.getTarget());
+
+        // BindingResult.rejectValue 로 error 전달
+        //rejectValue(field 명, errorCode(규칙 : 첫번째 이름.target),에러 인자, 디폴트 인자)
+        if (!StringUtils.hasText(item.getItemName())) {//글자가 없으면
+            bindingResult.rejectValue("itemName","required");
+        }
+        if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
+            bindingResult.rejectValue("price", "range",new Object[]{1000,1000000},null);
+        }
+        if (item.getQuantity() == null || item.getQuantity() >= 9999) {
+            bindingResult.rejectValue("quantity", "max",new Object[]{9999},null);
+        }
+
+        //BindingResult.reject로 error 전달
+        //reject()는 field 명은 없음
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{1000, resultPrice}, null);
             }
         }
 
