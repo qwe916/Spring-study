@@ -32,7 +32,7 @@ public class ItemValidator implements Validator {
             bindingResult.addError(new FieldError("item", "price",item.getPrice(), false, new String[]{"range.item.price"}, new Object[]{1000,10000000}, "가격은 1,000~1,000,0000 까지 허용합니다."));
         }
         if (item.getQuantity() == null || item.getQuantity() >= 9999) {
-            bindingResult.addError(new FieldError("item", "quantity",item.getQuantity(), false,  new String[]{"max.item.quantity"}, null, "수량은 최대 9,999까지 가능합니다."));
+            bindingResult.addError(new FieldError("item", "quantity",item.getQuantity(), false,  new String[]{"max.item.quantity"}, new Object[]{9999}, "수량은 최대 9,999까지 가능합니다."));
         }
 
         if (item.getPrice() != null && item.getQuantity() != null) {

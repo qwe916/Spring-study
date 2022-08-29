@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,6 +26,12 @@ public class ValidationItemControllerV2 {
 
     private final ItemRepository itemRepository;
     private final ItemValidator itemValidator;
+    @InitBinder
+    public void init(WebDataBinder dataBinder){
+        dataBinder.addValidators(itemValidator);//이 컨트롤러가 호출될때마다 항상 검증이 이루어진다.
+        //검증해야 할 객체(support()가 클래스에 맞게 작동하게 해줌)에 따라 검증
+    }
+
     @GetMapping
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
@@ -201,7 +209,7 @@ public class ValidationItemControllerV2 {
         redirectAttributes.addAttribute("status", true);
         return "redirect:/validation/v2/items/{itemId}";
     }
-    @PostMapping("/add")
+    //@PostMapping("/add")
     public String addV5Item(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         //검증
         itemValidator.validate(item, bindingResult);
@@ -217,6 +225,23 @@ public class ValidationItemControllerV2 {
         redirectAttributes.addAttribute("status", true);
         return "redirect:/validation/v2/items/{itemId}";
     }
+
+    @PostMapping("/add")
+    public String addV6Item(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        //@Validated 에노테이션만 넣어준다면 자동으로 검증을 해주고 BindingResult에 담아준다.
+
+        if (bindingResult.hasErrors()) {//오류가 존재하면
+            log.info("bindingResult= {}",bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        //검증 성공 로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
