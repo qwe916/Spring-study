@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -167,9 +168,15 @@ public class ValidationItemControllerV2 {
          * ex) required와  required.item.itemName 중 더 자세히 표현되어 있는게 우선순위가 높다.
          * 먼제 맨앞 메세지를 찾고 그 메시지 중 디테일한게 있으면 그에 맞는 디테일한 메세지를 보내고 없다면 후 순위 메시지를 보낸다.
         */
+
+        /**
+         * ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult,"itemName","required");
+         * ValidationUtils.rejectIfEmpty()를 사용하면 if문을 사용하지 않아도 된다.
+         */
+
          if (!StringUtils.hasText(item.getItemName())) {//글자가 없으면
             bindingResult.rejectValue("itemName","required");
-        }
+         }
         if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
             bindingResult.rejectValue("price", "range",new Object[]{1000,1000000},null);
         }
