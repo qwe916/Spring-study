@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,7 +23,7 @@ import java.util.Map;
 public class ValidationItemControllerV2 {
 
     private final ItemRepository itemRepository;
-
+    private final ItemValidator itemValidator;
     @GetMapping
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
@@ -154,7 +151,7 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-    @PostMapping("/add")
+    //@PostMapping("/add")
     public String addV4Item(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         //타켓을 이미 알고있는 bindingResult
@@ -192,6 +189,22 @@ public class ValidationItemControllerV2 {
                 bindingResult.reject("totalPriceMin", new Object[]{1000, resultPrice}, null);
             }
         }
+
+        if (bindingResult.hasErrors()) {//오류가 존재하면
+            log.info("bindingResult= {}",bindingResult);
+            return "validation/v2/addForm";
+        }
+
+        //검증 성공 로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+    @PostMapping("/add")
+    public String addV5Item(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        //검증
+        itemValidator.validate(item, bindingResult);
 
         if (bindingResult.hasErrors()) {//오류가 존재하면
             log.info("bindingResult= {}",bindingResult);
