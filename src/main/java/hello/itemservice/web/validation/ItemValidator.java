@@ -34,7 +34,6 @@ public class ItemValidator implements Validator {
         if (item.getQuantity() == null || item.getQuantity() >= 9999) {
             bindingResult.addError(new FieldError("item", "quantity",item.getQuantity(), false,  new String[]{"max.item.quantity"}, new Object[]{9999}, "수량은 최대 9,999까지 가능합니다."));
         }
-        //오류 메시지는 자동으로 hiverate가 생성해준 메시지 이다.
         if (item.getPrice() != null && item.getQuantity() != null) {
             int resultPrice = item.getPrice() * item.getQuantity();
             if (resultPrice < 10000) {

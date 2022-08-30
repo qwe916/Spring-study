@@ -13,6 +13,7 @@ public class BeanValidationTest {
 
     @Test
     void beanValidation() {
+        //검증기 생성
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();
 
@@ -21,8 +22,9 @@ public class BeanValidationTest {
         item.setItemName(" ");
         item.setPrice(0);
         item.setQuantity(10000000);
-
+        //검증 실행
         Set<ConstraintViolation<Item>> validations = validator.validate(item);
+        //오류 메시지는 자동으로 hiverate가 생성해준 메시지 이다.
         for (ConstraintViolation<Item> violation:validations
              ) {
             System.out.println("violation = " + violation);
