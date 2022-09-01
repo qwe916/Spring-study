@@ -8,6 +8,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+//Bean Validation 적용 (@Validated 애노테이션이 있을경우)
 @Data
 public class Item {
 
