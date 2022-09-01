@@ -53,6 +53,13 @@ public class ValidationItemControllerV3 {
          *  성공하면 다음 실패하면 typeMismatch로 fieldError에 추가
          * 2.Validator 적용
          * */
+        //ObjectError
+        if (item.getPrice() != null && item.getQuantity() != null) {
+            int resultPrice = item.getPrice() * item.getQuantity();
+            if (resultPrice < 10000) {
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+            }
+        }
         if (bindingResult.hasErrors()) {//오류가 존재하면
             log.info("bindingResult= {}",bindingResult);
             return "/validation/v3/addForm";
