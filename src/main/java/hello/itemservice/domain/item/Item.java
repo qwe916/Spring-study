@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 public class Item {
 
     private Long id;
-
-    @NotBlank//빈값 + 공백만 있는 경우를 허용하지 않는다.
+    //오류 메세지는 애노테이션 파라미터 message를 정의해준다.
+    @NotBlank(message = "공백 x")//빈값 + 공백만 있는 경우를 허용하지 않는다.
     private String itemName;
 
     @NotNull//null을 허용하지 않는다.
