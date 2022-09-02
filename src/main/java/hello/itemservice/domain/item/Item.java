@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class Item {
-
+    @NotNull//수정 요구 사항 추가
     private Long id;
     //오류 메세지는 애노테이션 파라미터 message를 정의해준다.
     @NotBlank(message = "공백 x")//빈값 + 공백만 있는 경우를 허용하지 않는다.
@@ -27,7 +27,8 @@ public class Item {
     private Integer price;
 
     @NotNull
-    @Max(9999)//최대값 설정
+    //@Max(9999) 추가 요구 사항 추가
+    // 최대값 설정
     private Integer quantity;
 
     public Item() {
