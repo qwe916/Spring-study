@@ -10,11 +10,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "redirect:/items";
-    }
-    @PostMapping("/item")
-    public Stirng itemadd(Model model){
-        model.addAttribute("item","items");
-        return "/items";
+        return "home";
     }
 }
