@@ -44,7 +44,16 @@ public class LoginController {
         //쿠키에 시간 정보를 주지 않으면 세션 쿠기(브라우저 종료시 모두 종료)
         Cookie idCookie = new Cookie("memberId", String.valueOf(loginMember.getId()));
         response.addCookie(idCookie);//쿠키를 HttpServletResponse에 담아서 보낸다.
-
+        /**
+         * 그러나 이렇게 구현한다면 보안 문제가 발생한다.
+         * 1. 클라이언트가 쿠키 값을 변경할 수 있다.
+         * 2. 쿠키에 보관된 정보를 훔쳐갈 수 있다.
+         * 3. 헤커가 쿠키를 한번 훔쳐가면 평생 사용할 수 있다.(쿠키 내용을 훔쳐가 악의적으로 이용할 수 있다.)
+         * 대안
+         * 1. 토큰값을 노출
+         * 2. 해커가 토크값을 넣어도 찾을 수 없도록 예상 불가능하게 만든다.
+         * 3.토큰 만료시간을 설정하여 해킹 의심을 강제로 해제한다.
+         */
         return "redirect:/";
     }
 
