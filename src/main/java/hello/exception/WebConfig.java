@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
         filterFilterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.ERROR);
         return filterFilterRegistrationBean;
     }
-    @Bean//인터셉터 등록
+   //인터셉터 등록
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
