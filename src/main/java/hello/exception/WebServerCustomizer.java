@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.awt.image.renderable.ContextualRenderedImageFactory;
 //웹서버를 커스텀하는 인터페이스
 @Slf4j
-@Component
+//@Component
 public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
 
      @Override
