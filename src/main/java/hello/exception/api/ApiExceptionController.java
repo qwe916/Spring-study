@@ -35,6 +35,7 @@ public class ApiExceptionController {
         throw new BadRequestException();//400오류 발생
     }
 
+    //ResponseStatusException 예외처리
     @GetMapping("/api/reponse-stauts-ex2")
     public String reponseStatusEx2(){
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "error.bad", new IllegalArgumentException());
