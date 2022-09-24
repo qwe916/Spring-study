@@ -19,6 +19,8 @@ public class ApiExceptionV2Controller {
     //@ExceptionHandler는 이 컨트롤러 내에서만 작동한다.
     //예외 발생시 ExceptionHandlerExceptionResolver가 실행되고 컨트롤러에 @ExeptionHandler를 찾은 후 실행. 정상흐름으로 처리되어 json으로 반환
     //만약 정상적인 처리(200)으로 처리하기 싫다면 @ResponseStatus를 붙여 json으로 반환하되 200이 아닌 status http code를 넘길 수 있다.
+   /*
+    Advice로 예외처리 주석처리
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorResult illegalExHandler(IllegalArgumentException e) {
@@ -40,7 +42,7 @@ public class ApiExceptionV2Controller {
     public ErrorResult exHandler(Exception e) {
         log.error("[exceptionHandler] ex", e);
         return new ErrorResult("EX", "내부오류");
-    }
+    }*/
     @GetMapping("api2/members/{id}")
     public MemberDto getMember(@PathVariable("id") String id) {
 
