@@ -45,6 +45,7 @@ public class UncheckedAppTest {
             try {
                 runSQL();
             } catch (SQLException e) {
+                //RutimeSQLException() 파라미터로 e를 넣어주지 않으면 기존 예외를 볼 수없어 문제가 생긴다.
                 throw new RuntimeSQLException(e);
             }
         }
