@@ -42,6 +42,7 @@ public class MemoryItemRepository implements ItemRepository {
         Integer maxPrice = cond.getMaxPrice();
         return store.values().stream()
                 .filter(item -> {
+                    //빈 문자(공백)로 true를 반환한다.
                     if (ObjectUtils.isEmpty(itemName)) {
                         return true;
                     }

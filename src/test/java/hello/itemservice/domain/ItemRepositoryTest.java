@@ -85,6 +85,7 @@ class ItemRepositoryTest {
         test("itemA", 10000, item1);
     }
 
+    //...은 파라미터의 수를 지정하지 않고 가변적으로 오버로딩된다.
     void test(String itemName, Integer maxPrice, Item... items) {
         List<Item> result = itemRepository.findAll(new ItemSearchCond(itemName, maxPrice));
         assertThat(result).containsExactly(items);
