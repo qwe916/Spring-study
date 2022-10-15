@@ -21,9 +21,12 @@ import java.util.Map;
 import java.util.Optional;
 /**
  * NamedParameterJdbcTemplate
- * SqlParameterSource
+ * 이름 지정 바인딩에서 자주 사용하는 파라미터
+ * SqlParameterSource(interface)
+ * 구현체
  * - BeanPropertySqlParameterSource
  * - MapSqlParameterSource
+ *
  * Map
  *
  * BeanPropertyRowMapper
@@ -38,8 +41,10 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
     }
     @Override
     public Item save(Item item) {
+        //파라미터를 이름 기반으로 설정해준다.
         String sql = "insert into item (item_name, price, quantity) " +
                 "values (:itemName, :price, :quantity)";
+        //item 객체에 있는 필드를 가지고 파라미터 생성
         SqlParameterSource param = new BeanPropertySqlParameterSource(item);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         template.update(sql, param, keyHolder);
@@ -52,7 +57,7 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
         String sql = "update item " +
                 "set item_name=:itemName, price=:price, quantity=:quantity " +
                 "where id=:id";
-
+        //Map과 유사하나 sql에 특화
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("itemName", updateParam.getItemName())
                 .addValue("price", updateParam.getPrice())
@@ -64,6 +69,7 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
     public Optional<Item> findById(Long id) {
         String sql = "select id, item_name, price, quantity from item where id = :id";
         try {
+            //map으로 바인딩
             Map<String, Object> param = Map.of("id", id);
             Item item = template.queryForObject(sql, param, itemRowMapper());
             return Optional.of(item);
@@ -75,6 +81,8 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
     public List<Item> findAll(ItemSearchCond cond) {
         Integer maxPrice = cond.getMaxPrice();
         String itemName = cond.getItemName();
+        //cond를 읽어드려 파라미터를 생성해준다.(자바빈 프로퍼티 규약을 토대로)
+        //그러나 변화해도 원하는 파라미터가 class에 없으면 파라미터가 만들어지지 않으니 MapSqlParameterSource()를 사용하면 된다.
         SqlParameterSource param = new BeanPropertySqlParameterSource(cond);
         String sql = "select id, item_name, price, quantity from item";
         //동적 쿼리
@@ -96,6 +104,10 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
         return template.query(sql, param, itemRowMapper());
     }
     private RowMapper<Item> itemRowMapper() {
-        return BeanPropertyRowMapper.newInstance(Item.class); //camel 변환 지원
+        //RowMapper생성 파라미터 클래스에 기반하여
+        return BeanPropertyRowMapper.newInstance(Item.class); //camel(낙타 표기법) 변환 지원
+        //만약 파라미터에 item_name이 없으면 개발자가 'as 원하는 이름'으로 바꾸어서 사용해도 된다.
+        //그러나 item_name 과 같은 snake_case는 camel 기법으로 자동을 변환해준다. 따라서 완전히 다른 이름만 as를 이용하여 바꾸어준다.
     }
+
 }
