@@ -11,18 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+@Transactional //테스트 케이스에 @Transactional을 붙이면 자동으로 롤백까지의 과정을 해준다.
 @SpringBootTest
 class ItemRepositoryTest {
 
     @Autowired
     ItemRepository itemRepository;
-    //트랜잭션 관련 코드
+   /* //트랜잭션 관련 코드
     @Autowired
     PlatformTransactionManager transactionManager;
     TransactionStatus status;
@@ -30,7 +31,7 @@ class ItemRepositoryTest {
     void beforeEach() {
         //트랜잭션 시작
         status = transactionManager.getTransaction(new DefaultTransactionAttribute());
-    }
+    }*/
 
     @AfterEach
     void afterEach() {
@@ -39,6 +40,7 @@ class ItemRepositoryTest {
             ((MemoryItemRepository) itemRepository).clearStore();
         }
         //트랜잭션 롤백
+        //transactionManager.rollback(status);
     }
 
     @Test
