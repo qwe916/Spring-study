@@ -17,6 +17,9 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+/* 만약 강제로 커밋하고 싶다면 @Commit 호은 @Rollbakc(value =false)를 하면 롤백을 하지않고 커밋할 수 있다.
+ */
 @Transactional //테스트 케이스에 @Transactional을 붙이면 자동으로 롤백까지의 과정을 해준다.
 @SpringBootTest
 class ItemRepositoryTest {
