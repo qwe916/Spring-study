@@ -5,9 +5,13 @@ import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 
 import java.util.List;
 
@@ -18,6 +22,15 @@ class ItemRepositoryTest {
 
     @Autowired
     ItemRepository itemRepository;
+    //트랜잭션 관련 코드
+    @Autowired
+    PlatformTransactionManager transactionManager;
+    TransactionStatus status;
+    @BeforeEach
+    void beforeEach() {
+        //트랜잭션 시작
+        status = transactionManager.getTransaction(new DefaultTransactionAttribute());
+    }
 
     @AfterEach
     void afterEach() {
@@ -25,6 +38,7 @@ class ItemRepositoryTest {
         if (itemRepository instanceof MemoryItemRepository) {
             ((MemoryItemRepository) itemRepository).clearStore();
         }
+        //트랜잭션 롤백
     }
 
     @Test
