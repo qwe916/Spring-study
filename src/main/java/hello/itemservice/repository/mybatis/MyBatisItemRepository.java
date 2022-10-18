@@ -4,15 +4,18 @@ import hello.itemservice.repository.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class MyBatisItemRepository implements ItemRepository {
     private final ItemMapper itemMapper;
     @Override
     public Item save(Item item) {
+        log.info("itemMapper class={}",itemMapper.getClass());//Mapper의 동적 프록시 객체이름 로그 찍어보기
         itemMapper.save(item);
         return item;
     }
