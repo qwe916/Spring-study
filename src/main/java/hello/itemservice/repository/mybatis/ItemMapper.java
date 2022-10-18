@@ -12,10 +12,8 @@ import java.util.Optional;
 @Mapper
 public interface ItemMapper {
     void save(Item item);
-
-    void update(@Param("id") Long id, @Param("updateParam") ItemUpdateDto itemUpdateDto);
-
-    List<Item> findAll(ItemSearchCond itemSearchCond);
-
+    void update(@Param("id") Long id, @Param("updateParam") ItemUpdateDto
+            updateParam);
     Optional<Item> findById(Long id);
+    List<Item> findAll(ItemSearchCond itemSearch);
 }

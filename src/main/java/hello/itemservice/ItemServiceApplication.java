@@ -15,8 +15,9 @@ import javax.sql.DataSource;
 
 //@Import(MemoryConfig.class)
 //@Import(JdbcTemplateV2Config.class)
+// @Import(JdbcTemplateV3Config.class)
+@Import(MyBatisConfig.class)
 @Slf4j
-@Import(JdbcTemplateV3Config.class)
 @SpringBootApplication(scanBasePackages = "hello.itemservice.web")
 public class ItemServiceApplication {
 
@@ -31,7 +32,7 @@ public class ItemServiceApplication {
 	}
 
 
-	@Bean
+	/*@Bean
 	@Profile("test")//프로필이 test인 경우에만 bean에 등록한다.
 	public DataSource dataSource() {
 		log.info("메모리 데이터베이스 초기화");
@@ -43,5 +44,5 @@ public class ItemServiceApplication {
 		dataSource.setUsername("sa");
 		dataSource.setPassword("");
 		return dataSource;
-	}
+	}*/
 }
