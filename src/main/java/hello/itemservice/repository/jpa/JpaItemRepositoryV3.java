@@ -28,7 +28,7 @@ public class JpaItemRepositoryV3 implements ItemRepository {
 
     private final JPAQueryFactory query;
 
-    public JpaItemRepositoryV3(EntityManager em, JPAQueryFactory query) {
+    public JpaItemRepositoryV3(EntityManager em) {
         this.em = em;
         //JPQL을 만들기 위해 em 사용
         this.query = new JPAQueryFactory(em);
