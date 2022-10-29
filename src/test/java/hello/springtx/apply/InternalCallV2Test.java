@@ -42,6 +42,11 @@ public class InternalCallV2Test {
         public void external() {
             log.info("call external");
             printTxInfo();
+            /**
+             * internal 메소드를 내부호출로 호출하면 트랜잭션이 적용되지 않기 때문에
+             * 별도의 클래스를 생성하여 외부호출한다.
+             * 다른 해결방안들이 존재한다.
+             */
             internalService.internal();
         }
 
