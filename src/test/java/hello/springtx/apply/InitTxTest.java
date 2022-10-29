@@ -34,6 +34,11 @@ public class InitTxTest {
 
     @Slf4j
     static class Hello {
+        /**
+         * @PostConstruct
+         * 위 어노테이션을 사용하면 트랜잭션을 획득할 수 없다.
+         * 왜냐하면 초기화 코드가 먼저 실행되고 트랜잭션 AOP가 적용되기 때문에 초기화 시점에는 트랜잭션을 획들할 수 없다.
+         */
         @PostConstruct
         @Transactional
         public void initV1() {
@@ -42,6 +47,11 @@ public class InitTxTest {
             log.info("Hello init @PostConstruct tx active={}", isActive);
         }
 
+        /**
+         * @EventListener
+         * 스프링 컨테이너가 완전히 생성된 후에 이벤트가 붙은 메서드를 호출해준다.
+         * ApplicationReadyEvent
+         */
         @EventListener(value = ApplicationReadyEvent.class)
         @Transactional
         public void init2() {
