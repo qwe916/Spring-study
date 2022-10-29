@@ -44,6 +44,10 @@ public class InternalCallV1Test {
         public void external() {
             log.info("call external");
             printTxInfo();
+            /**
+             * this.internal()을 호출하여 프록시의 internal을 호출하지 않아 @Transactional이 적용되지 않는다.
+             * 따라서 프록시의 internal을 사용해야 트랜잭션이 적용된다.
+             */
             internal();
         }
 
