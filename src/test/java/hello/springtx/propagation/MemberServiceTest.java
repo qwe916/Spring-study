@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
@@ -36,4 +37,21 @@ class MemberServiceTest {
 
     }
 
+    /**
+     * memberRepository @Transactional : on
+     * logRepository @Transactional : on Exception
+     * memberService @Transactional : off
+     */
+    @Test
+    void outerTxOff_fail() {
+        //given
+        String username = "로그예외_outerTxoff_success";
+        //when
+        assertThatThrownBy(() -> memberService.joinV1(username))
+                .isInstanceOf(RuntimeException.class);
+        //then : 완전히 롤백되지 않고, member 데이터가 남아서 저장된다.
+        assertTrue(memberRepository.find(username).isPresent());
+        assertTrue(logRepository.find(username).isPresent());
+
+    }
 }
