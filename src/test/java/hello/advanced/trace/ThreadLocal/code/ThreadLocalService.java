@@ -8,7 +8,7 @@ public class ThreadLocalService {
     public String logic(String name) {
         log.info("저장 name={} -> nameStore={}", name, nameStore.get());
         nameStore.set(name);
-        sleep(1000);
+        sleep(1000);//쓰레드 멈추기 메소드
         log.info("조회 nameStore={}",nameStore.get());
         return nameStore.get();
     }
