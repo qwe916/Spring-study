@@ -70,4 +70,36 @@ public class ContextV1Test {
         contextV2.execute();
 
     }
+
+    /**
+     * 파라미터에서 전략 생성
+     */
+    @Test
+    void strategyV3() {
+        ContextV1 contextV1 = new ContextV1(new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직 1 실행");
+            }
+        });
+        contextV1.execute();
+        ContextV1 contextV2 = new ContextV1(new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직 2 실행");
+            }
+        });
+        contextV2.execute();
+    }
+
+    /**
+     * 람다 사용
+     */
+    @Test
+    void strategyV4() {
+        ContextV1 contextV1 = new ContextV1(() -> log.info("비즈니스 로직 1 실행"));
+        contextV1.execute();
+        ContextV1 contextV2 = new ContextV1(() -> log.info("비즈니스 로직 2 실행"));
+        contextV2.execute();
+    }
 }
