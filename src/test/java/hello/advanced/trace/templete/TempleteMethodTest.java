@@ -1,5 +1,8 @@
 package hello.advanced.trace.templete;
 
+import hello.advanced.trace.templete.code.AbstractTemplate;
+import hello.advanced.trace.templete.code.SubClassLogic1;
+import hello.advanced.trace.templete.code.SubClassLogic2;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +14,16 @@ public class TempleteMethodTest {
         logic2();
     }
 
+    /**
+     * 템플릿 메서드 패턴 사용
+     */
+    @Test
+    void TemplateMethodV1() {
+        AbstractTemplate abstractTemplate1 = new SubClassLogic1();
+        abstractTemplate1.execute();
+        AbstractTemplate abstractTemplate2 = new SubClassLogic2();
+        abstractTemplate2.execute();
+    }
     private void logic1() {
         long startTime = System.currentTimeMillis();
         //비즈니스 로직 실행
