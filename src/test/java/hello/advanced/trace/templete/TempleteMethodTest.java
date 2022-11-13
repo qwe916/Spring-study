@@ -24,6 +24,24 @@ public class TempleteMethodTest {
         AbstractTemplate abstractTemplate2 = new SubClassLogic2();
         abstractTemplate2.execute();
     }
+
+    @Test
+    void TemplateMethodV2() {
+        AbstractTemplate abstractTemplate1 = new AbstractTemplate() {
+            @Override
+            protected void call() {
+                log.info("비즈니스 로직 1");
+            }
+        };
+        abstractTemplate1.execute();
+        AbstractTemplate abstractTemplate2 = new AbstractTemplate() {
+            @Override
+            protected void call() {
+                log.info("비즈니스 로직 2");
+            }
+        };
+        abstractTemplate2.execute();
+    }
     private void logic1() {
         long startTime = System.currentTimeMillis();
         //비즈니스 로직 실행
