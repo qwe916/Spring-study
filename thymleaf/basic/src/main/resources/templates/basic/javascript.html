@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 자바스크립트 인라인 사용 전 -->
+<script>
+ var username = [[${user.username}]];
+ var age = [[${user.age}]];
+ //자바스크립트 내추럴 템플릿
+ var username2 = /*[[${user.username}]]*/ "test username";
+ //객체
+ var user = [[${user}]];
+</script>
+<!-- 자바스크립트 인라인 사용 후 -->
+<script th:inline="javascript"><!--스크립트 사이는 자바스크립트의 영역으로 자동으로 처리, 이스케이프 문자도 자동으로 처리, 객체도 자동으로 Json으로 변환-->
+ var username = [[${user.username}]];
+ var age = [[${user.age}]];
+ //자바스크립트 내추럴 템플릿
+ var username2 = /*[[${user.username}]]*/ "test username";
+ //객체
+ var user = [[${user}]];
+</script>
+<!-- 자바스크립트 인라인 each -->
+<script th:inline="javascript"><!--[# ...] 문법으로 반복문 사용-->
+ [# th:each="user, stat : ${users}"]
+ var user[[${stat.count}]] = [[${user}]];
+ [/]
+</script>
+</body>
+</html>
