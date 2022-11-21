@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:object="${form}" th:method="post">
+    <!-- th:field는 컨버터를 자동으로 적용시켜준다. 적용시키기 싫다면 th:value를 쓰면된다.-->
+    th:field <input type="text" th:field="*{ipPort}"><br/>
+    th:value <input type="text" th:value="*{ipPort}">(보여주기 용도)<br/>
+    <input type="submit"/>
+</form>
+</body>
+</html>
