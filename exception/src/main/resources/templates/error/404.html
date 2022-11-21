@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<!--error 페이지만 만들면 spring boot가 자동으로 오류 페이지를 매핑해준다.-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>404 오류 화면 스프링 부트 제공</h2>
+    </div>
+    <div>
+        <p>오류 화면 입니다.</p>
+    </div>
+    <ul>
+        <li>오류 정보</li>
+        <ul>
+            <!--보안상의 문제로 모든 정보를 보여주지 않는다 그러나 properties에 설정을 해주면 보여줄 수 있다.-->
+            <li th:text="|timestamp: ${timestamp}|"></li>
+            <li th:text="|path: ${path}|"></li>
+            <li th:text="|status: ${status}|"></li>
+            <li th:text="|message: ${message}|"></li>
+            <li th:text="|error: ${error}|"></li>
+            <li th:text="|exception: ${exception}|"></li>
+            <li th:text="|errors: ${errors}|"></li>
+            <li th:text="|trace: ${trace}|"></li>
+        </ul>
+        </li>
+    </ul>
+    <hr class="my-4">
+</div> <!-- /container -->
+</body>
+</html>
