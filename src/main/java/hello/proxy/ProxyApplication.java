@@ -2,6 +2,7 @@ package hello.proxy;
 
 import hello.proxy.config.AppV1Config;
 import hello.proxy.config.AppV2Config;
+import hello.proxy.config.BeanPostProcessorConfig;
 import hello.proxy.config.v1_proxy.ConcreteProxy;
 import hello.proxy.config.v1_proxy.InterfaceProxyConfig;
 import hello.proxy.config.v2_dynamicproxy.DynamicProxyFilterConfig;
@@ -19,7 +20,10 @@ import org.springframework.context.annotation.Import;
 /*
 @Import(DynamicProxyFilterConfig.class)
 */
+/*
 @Import(ProxyFactoryConfigV2.class)
+*/
+@Import(BeanPostProcessorConfig.class)
 @SpringBootApplication(scanBasePackages = "hello.proxy.app") //주의 componet scan할 때 app 디렉터리 아래의 파일들만 scan한다.
 public class ProxyApplication {
 
