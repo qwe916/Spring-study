@@ -12,7 +12,10 @@ public class JdkDynamicProxyTest {
     void dynamicA() {
         AInterface target = new AImpl();
         TimeInvocationHandler handler = new TimeInvocationHandler(target);
+        //동적 프록시 생성
+        //반환 타입이 Object이기 때문에 강제 타입변환을 해주어도 된다.
         AInterface proxy = (AInterface) Proxy.newProxyInstance(AInterface.class.getClassLoader(), new Class[]{AInterface.class}, handler);
+       //client call -> 동적 프록시 생성 -> 프록시가 핸들러 로직 실행 -> invoke() 실행 -> invoke의 method는 call() 실행
         proxy.call();
         log.info("targetClass={}", target.getClass());
         log.info("proxyClass={}", proxy.getClass());
