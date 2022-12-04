@@ -37,16 +37,22 @@ public class ReflectionTest {
 
     @Test
     void reflection2() throws Exception {
-        Class classHello =
-                Class.forName("hello.proxy.jdkdynamic.ReflectionTest$Hello");
+        //클래스의 메타 정보 받아오기
+        Class classHello = Class.forName("hello.proxy.jdkdynamic.ReflectionTest$Hello");
         Hello target = new Hello();
+        //callA의 메소드 정보
         Method methodCallA = classHello.getMethod("callA");
         dynamicCall(methodCallA, target);
+        //callB의 메소드 정보
         Method methodCallB = classHello.getMethod("callB");
         dynamicCall(methodCallB, target);
     }
     private void dynamicCall(Method method, Object target) throws Exception {
+        /**
+         * 메서드를 리플랙션을 사용해서 Method라는 메타정보로 추상화하여 고통 로직을 만들수 있게 하였다.
+         */
         log.info("start");
+        //획득한 메소드 메타정보로 실제 인스턴스의 메소드를 호출한다.
         Object result = method.invoke(target);
         log.info("result={}", result);
     }
