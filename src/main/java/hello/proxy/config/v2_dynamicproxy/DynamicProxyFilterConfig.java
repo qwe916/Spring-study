@@ -10,10 +10,11 @@ import java.lang.reflect.Proxy;
 
 @Configuration
 public class DynamicProxyFilterConfig {
-    public static final String[] PATTERNS = {"request*", "order*", "save*"};
+    public static final String[] PATTERNS = {"request*", "order*", "save*"};//해당 이름에 맞는 메서드만 공통 로직을 처리한다.
     @Bean
     public OrderControllerV1 orderControllerV1(LogTrace logTrace) {
         OrderControllerV1 orderController = new OrderControllerV1Impl(orderServiceV1(logTrace));
+        //Proxy.newProxyInstance(클래스 로더, 인터페이스, 공통 처리 로직 클래스)
         OrderControllerV1 proxy = (OrderControllerV1) Proxy.newProxyInstance(DynamicProxyFilterConfig.class.getClassLoader(), new Class[]{OrderControllerV1.class}, new LogTraceFilterHandler(orderController, logTrace, PATTERNS));
         return proxy;
     }

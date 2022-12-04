@@ -20,15 +20,15 @@ public class LogTraceFilterHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws
             Throwable {
-        //메서드 이름 필터
-        String methodName = method.getName();
-        if (!PatternMatchUtils.simpleMatch(patterns, methodName)) {
-            return method.invoke(target, args);
+        //메서드 이름 필터 : 특정 메서드 이름이 매칭 되는 경우에만 로직 실행
+        String methodName = method.getName();//메서드 이름 가져오기
+        if (!PatternMatchUtils.simpleMatch(patterns, methodName)) {//패턴에 있는 메소드와 일치치하지 않으면
+            return method.invoke(target, args);//메소드 실행
         }
         TraceStatus status = null;
         try {
-            String message = method.getDeclaringClass().getSimpleName() + "."
-                    + method.getName() + "()";
+            //메소드를 선언한 클래스의 이름 + 메소드 이름+()
+            String message = method.getDeclaringClass().getSimpleName() + "." + method.getName() + "()";
             status = logTrace.begin(message);
             //로직 호출
             Object result = method.invoke(target, args);
