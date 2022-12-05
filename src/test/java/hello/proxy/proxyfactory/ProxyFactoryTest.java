@@ -53,7 +53,7 @@ public class ProxyFactoryTest {
     void proxyTargetClass() {
         ServiceInterface target = new ServiceImpl();
         ProxyFactory proxyFactory = new ProxyFactory(target);
-        proxyFactory.setProxyTargetClass(true); //중요
+        proxyFactory.setProxyTargetClass(true); //true로 설정해 놓으면 인터페이스가 있어도 CGLIB을 사용한다.
         proxyFactory.addAdvice(new TimeAdvice());
         ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
         log.info("targetClass={}", target.getClass());
