@@ -21,7 +21,10 @@ public class AdvisorTest {
     void advisorTest1() {
         ServiceImpl target = new ServiceImpl();
         ProxyFactory proxyFactory = new ProxyFactory(target);
+        //Advisor는 1개의 PointCut과 1개의 Advice를 갖는다.
+        //Point.True 항상 참이 PointCut
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(Pointcut.TRUE, new TimeAdvice());
+        //프록시 팩토리에 Advisor 설정
         proxyFactory.addAdvisor(advisor);
         ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
 
