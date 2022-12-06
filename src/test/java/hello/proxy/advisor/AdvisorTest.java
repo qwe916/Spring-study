@@ -53,6 +53,13 @@ public class AdvisorTest {
         ServiceImpl target = new ServiceImpl();
         ProxyFactory proxyFactory = new ProxyFactory(target);
         NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+        //save인 경우에만 advice 적용
+        /**
+         * JdkRegexMethodPointcut :정규 표현식 기반 포인트컷
+         * AspectJExpressPointcut : 실무에서 가장 많이 사용하는 aspectJ 표현식
+         * TruePointcut : 항상 참을 반환
+         * AnnotationMatchingPointcut : 어노테이션 기반 pointcut
+         */
         pointcut.setMappedNames("save");
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(pointcut, new TimeAdvice());
         proxyFactory.addAdvisor(advisor);
