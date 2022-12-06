@@ -38,6 +38,7 @@ public class AdvisorTest {
     void advisorTest2() {
         ServiceImpl target = new ServiceImpl();
         ProxyFactory proxyFactory = new ProxyFactory(target);
+        //만든 포인트 컷 적용
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(new MyPointcut(), new TimeAdvice());
         proxyFactory.addAdvisor(advisor);
         ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
@@ -61,13 +62,16 @@ public class AdvisorTest {
     }
 
     static class MyPointcut implements Pointcut {
+        //ClassFilter와 MethodFilter 둘다 true가 되어야 한다.
         @Override
         public ClassFilter getClassFilter() {
+            //클래스 조건으로 필터링
             return ClassFilter.TRUE;
         }
 
         @Override
         public MethodMatcher getMethodMatcher() {
+            //메소드 조건으로 필터링
             return new MyMethodMatcher();
         }
     }
@@ -77,6 +81,7 @@ public class AdvisorTest {
 
         @Override
         public boolean matches(Method method, Class<?> targetClass) {
+            //save 메소드 일경우에만 proxy 동작
             boolean result = method.getName().equals(matchName);
             log.info("포인트컷 호출 method={} targetClass={}", method.getName(), targetClass);
             log.info("포인트컷 결과 result={}", result);
@@ -85,6 +90,8 @@ public class AdvisorTest {
 
         @Override
         public boolean isRuntime() {
+            //false면 정적 정보만 사용하기 때문에 스프링이 내부에서 캐싱을 통새 성능이 향상된다.
+            //true면 matches() 메소드가 대신 호출된다.
             return false;
         }
 
