@@ -46,12 +46,14 @@ public class BeanPostProcessorTest {
             log.info("hello B");
         }
     }
+    //빈 후처리기
     @Slf4j
     static class AToBPostProcessor implements BeanPostProcessor {
         @Override
         public Object postProcessAfterInitialization(Object bean, String
                 beanName) throws BeansException {
             log.info("beanName={} bean={}", beanName, bean);
+            //등록하는 빈이 A라면 B를 반환한다.
             if (bean instanceof A) {
                 return new B();
             }
