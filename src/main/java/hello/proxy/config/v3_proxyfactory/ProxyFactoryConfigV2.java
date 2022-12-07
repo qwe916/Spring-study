@@ -19,6 +19,7 @@ public class ProxyFactoryConfigV2 {
         OrderControllerV2 orderController = new
                 OrderControllerV2(orderServiceV2(logTrace));
         ProxyFactory factory = new ProxyFactory(orderController);
+        //Advisor 추가
         factory.addAdvisor(getAdvisor(logTrace));
         OrderControllerV2 proxy = (OrderControllerV2) factory.getProxy();
         log.info("ProxyFactory proxy={}, target={}", proxy.getClass(),
@@ -30,6 +31,7 @@ public class ProxyFactoryConfigV2 {
         OrderServiceV2 orderService = new
                 OrderServiceV2(orderRepositoryV2(logTrace));
         ProxyFactory factory = new ProxyFactory(orderService);
+        //Advisor 추가
         factory.addAdvisor(getAdvisor(logTrace));
         OrderServiceV2 proxy = (OrderServiceV2) factory.getProxy();
         log.info("ProxyFactory proxy={}, target={}", proxy.getClass(),
@@ -40,6 +42,7 @@ public class ProxyFactoryConfigV2 {
     public OrderRepositoryV2 orderRepositoryV2(LogTrace logTrace) {
         OrderRepositoryV2 orderRepository = new OrderRepositoryV2();
         ProxyFactory factory = new ProxyFactory(orderRepository);
+        //Advisor 추가
         factory.addAdvisor(getAdvisor(logTrace));
         OrderRepositoryV2 proxy = (OrderRepositoryV2) factory.getProxy();
         log.info("ProxyFactory proxy={}, target={}", proxy.getClass(),
