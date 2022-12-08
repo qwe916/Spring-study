@@ -21,7 +21,7 @@ public class PackageLogTraceProxyPostProcessor implements BeanPostProcessor {
         //프록시 적용 대상 여부 체크
         //프록시 적용 대상이 아니면 원본을 그대로 반환
         String packageName = bean.getClass().getPackageName();
-        if (!packageName.startsWith(basePackage)) {
+        if (!packageName.startsWith(basePackage)) {//basepackage가 아니라면 원본을 반환하고 아니면 프록시를 반환
             return bean;
         }
         //프록시 대상이면 프록시를 만들어서 반환
