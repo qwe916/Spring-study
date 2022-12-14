@@ -20,4 +20,12 @@ public class ExecutionTest {
         //public java.lang.String  hello.aop.member.MemberServiceImpl.hello(java.lang.String)
         log.info("helloMethod={}", helloMethod);
     }
+
+    @Test
+    void exactMatch() {
+        //public java.lang.Stringhello.aop.member.MemberServiceImpl.hello(java.lang.String)
+        pointcut.setExpression("execution(public String hello.aop.member.MemberServiceImpl.hello(String))");
+        assertThat(pointcut.matches(helloMethod,
+                MemberServiceImpl.class)).isTrue();
+    }
 }
